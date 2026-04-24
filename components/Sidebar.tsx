@@ -3,45 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Mail, Menu, X } from "lucide-react";
-
-const GithubIcon = ({ size = 24, ...props }) => (
-  <svg
-    {...props}
-    width={size}
-    height={size}
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
-    <path d="M9 18c-4.51 2-5-2-7-2" />
-  </svg>
-);
-
-const LinkedinIcon = ({ size = 24, ...props }) => (
-  <svg
-    {...props}
-    width={size}
-    height={size}
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
-    <rect width="4" height="12" x="2" y="9" />
-    <circle cx="4" cy="4" r="2" />
-  </svg>
-);
-
+import { Github, Linkedin, Mail, Menu, X } from "lucide-react";
 
 // Datos de perfil del sidebar
 const perfilDatos = {
@@ -61,13 +23,13 @@ const enlacesSociales = [
   {
     nombre: "GitHub",
     href: perfilDatos.enlaces.github,
-    icono: GithubIcon,
+    icono: Github,
     etiqueta: "Ver perfil de GitHub",
   },
   {
     nombre: "LinkedIn",
     href: perfilDatos.enlaces.linkedin,
-    icono: LinkedinIcon,
+    icono: Linkedin,
     etiqueta: "Ver perfil de LinkedIn",
   },
   {
@@ -83,9 +45,31 @@ export default function Sidebar() {
 
   return (
     <>
-      {/* Botón hamburguesa en mobile */}
+   {/*
+        Efecto de palpitación del botón hamburguesa:
+        - Simula una respiración real: expansión suave → contracción → pausa larga
+        - La sombra turquesa crece y se desvanece como si el botón "respirara"
+        - Sin escala para que el layout no se mueva, solo la sombra late
+        - Ciclo de 3.5s: latido rápido + pausa natural, se siente orgánico
+      */}
+      <style>{`
+        @keyframes palpitacion {
+          0%   { box-shadow: 0 0 0 0 rgba(45, 212, 191, 0.0); }
+          15%  { box-shadow: 0 0 0 6px rgba(45, 212, 191, 0.25); }
+          30%  { box-shadow: 0 0 0 0 rgba(45, 212, 191, 0.0); }
+          45%  { box-shadow: 0 0 0 6px rgba(45, 212, 191, 0.15); }
+          60%  { box-shadow: 0 0 0 0 rgba(45, 212, 191, 0.0); }
+          100% { box-shadow: 0 0 0 0 rgba(45, 212, 191, 0.0); }
+        }
+ 
+        .boton-palpitacion {
+          animation: palpitacion 3.5s ease-in-out infinite;
+        }
+      `}</style>
+
+      {/* Botón hamburguesa en mobile con efecto de respiración */}
       <button
-        className="fixed top-4 right-4 z-50 md:hidden bg-[#111] border border-[#222] p-2 rounded-lg text-[#a1a1aa] hover:text-[#2dd4bf] transition-colors"
+        className="boton-palpitacion fixed top-4 right-4 z-50 md:hidden bg-[#111] border border-[#2dd4bf]/40 p-2 rounded-lg text-[#a1a1aa] hover:text-[#2dd4bf] transition-colors"
         onClick={() => setMenuAbierto(!menuAbierto)}
         aria-label={menuAbierto ? "Cerrar menú" : "Abrir menú"}
       >
@@ -100,11 +84,12 @@ export default function Sidebar() {
         />
       )}
 
-      {/* Sidebar principal */}
+      {/* Sidebar principal — overflow-y-auto para pantallas chicas */}
       <aside
         className={`
           fixed top-0 left-0 h-full w-72 bg-[#0d0d0d] border-r border-[#1a1a1a] z-40
           flex flex-col py-10 px-8 gap-8
+          overflow-y-auto
           transition-transform duration-300 ease-in-out
           ${menuAbierto ? "translate-x-0" : "-translate-x-full"}
           md:translate-x-0
@@ -112,9 +97,9 @@ export default function Sidebar() {
       >
         {/* Foto de perfil */}
         <div className="flex flex-col items-center gap-4 text-center">
-          <div className="relative w-24 h-24 rounded-full overflow-hidden ring-2 ring-[#2dd4bf]/30">
+          <div className="relative w-24 h-24 rounded-full overflow-hidden ring-2 ring-[#2dd4bf]/30 shrink-0">
             <Image
-              src="/profile.jpg"
+              src="/perfil.jpg"
               alt={`Foto de perfil de ${perfilDatos.nombre}`}
               fill
               className="object-cover"
@@ -135,7 +120,7 @@ export default function Sidebar() {
         </div>
 
         {/* Separador */}
-        <div className="border-t border-[#1a1a1a]" />
+        <div className="border-t border-[#1a1a1a] shrink-0" />
 
         {/* Navegación */}
         <nav aria-label="Navegación principal">
@@ -161,10 +146,10 @@ export default function Sidebar() {
         </nav>
 
         {/* Separador */}
-        <div className="border-t border-[#1a1a1a]" />
+        <div className="border-t border-[#1a1a1a] shrink-0" />
 
         {/* Íconos de redes sociales */}
-        <div className="flex items-center justify-center gap-4">
+        <div className="flex items-center justify-center gap-4 pb-2">
           {enlacesSociales.map((enlace) => {
             const Icono = enlace.icono;
             return (
