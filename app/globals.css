@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Variables de color del portfolio ───────────────── */
+:root {
+  --color-fondo: #0a0a0a;
+  --color-fondo-secundario: #0f0f0f;
+  --color-texto: #a1a1aa;
+  --color-texto-tenue: #71717a;
+  --color-acento: #2dd4bf;
+  --color-borde: #1a1a1a;
+}
+
+/* ── Estilos base ────────────────────────────────────── */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+}
+
+body {
+  background-color: var(--color-fondo);
+  color: var(--color-texto);
+}
+
+/* Ocultar scrollbar en WebKit manteniendo funcionalidad */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-fondo);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-borde);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #2a2a2a;
+}
+
+/* ── Animaciones de entrada ──────────────────────────── */
+@keyframes entrada-fade {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: entrada-fade 0.7s ease-out forwards;
+}
