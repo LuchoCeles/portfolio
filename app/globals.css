@@ -15,7 +15,13 @@
 /* ── Estilos base ────────────────────────────────────── */
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 80px;
+
+  /*
+    Sin navbar fija que ocupe altura, el valor anterior de 80px
+    empujaba el contenido demasiado hacia abajo al navegar por anclas.
+    Con 24px se logra un respiro visual mínimo sin dejar espacio excesivo.
+  */
+  scroll-padding-top: 24px;
 }
 
 body {
