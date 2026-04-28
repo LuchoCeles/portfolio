@@ -223,51 +223,59 @@ export default function Sidebar() {
         {/* Separador */}
         <div style={{ borderTop: "1px solid var(--color-borde)" }} />
 
-        {/* ── Botón de cambio de tema (sol / luna) ── */}
+        {/* ── Toggle switch de cambio de tema ── */}
         <div
-          className={`flex items-center justify-center ${
+          className={`flex items-center justify-center gap-3 ${
             menuAbierto ? "sidebar-item-animado" : ""
           }`}
           style={{ animationDelay: "480ms" }}
         >
+
+          {/* Pista del toggle */}
           <button
             onClick={alternarTema}
             aria-label={tema === "oscuro" ? "Cambiar a modo claro" : "Cambiar a modo oscuro"}
-            className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium
-              transition-all duration-300"
+            className="relative flex-shrink-0 rounded-full transition-all duration-300 cursor-pointer"
             style={{
-              backgroundColor: "var(--color-acento-fondo)",
-              border: "1px solid var(--color-acento-borde)",
-              color: "var(--color-acento)",
-            }}
-            onMouseEnter={(e) => {
-              (e.currentTarget as HTMLElement).style.backgroundColor =
-                "var(--color-acento-fondo-hover)";
-              (e.currentTarget as HTMLElement).style.borderColor =
-                "var(--color-acento-borde-hover)";
-              (e.currentTarget as HTMLElement).style.boxShadow =
-                "0 0 12px var(--color-acento-sombra)";
-            }}
-            onMouseLeave={(e) => {
-              (e.currentTarget as HTMLElement).style.backgroundColor =
-                "var(--color-acento-fondo)";
-              (e.currentTarget as HTMLElement).style.borderColor =
-                "var(--color-acento-borde)";
-              (e.currentTarget as HTMLElement).style.boxShadow = "none";
+              width: "52px",
+              height: "28px",
+              backgroundColor:
+                tema === "oscuro"
+                  ? "rgba(45, 212, 191, 0.12)"
+                  : "rgba(232, 97, 42, 0.12)",
+              border:
+                tema === "oscuro"
+                  ? "1.5px solid rgba(45, 212, 191, 0.35)"
+                  : "1.5px solid rgba(232, 97, 42, 0.35)",
+              boxShadow:
+                tema === "oscuro"
+                  ? "inset 0 0 8px rgba(45, 212, 191, 0.08)"
+                  : "inset 0 0 8px rgba(232, 97, 42, 0.08)",
             }}
           >
-            {/* Sol → cambiar a claro / Luna → cambiar a oscuro */}
-            {tema === "oscuro" ? (
-              <>
-                <Sun size={16} />
-                <span>Modo claro</span>
-              </>
-            ) : (
-              <>
-                <Moon size={16} />
-                <span>Modo oscuro</span>
-              </>
-            )}
+            {/* Thumb deslizante con el ícono */}
+            <span
+              className="absolute top-1/2 flex items-center justify-center rounded-full transition-all duration-300"
+              style={{
+                width: "20px",
+                height: "20px",
+                transform: "translateY(-50%)",
+                left: tema === "oscuro" ? "3px" : "calc(100% - 23px)",
+                backgroundColor:
+                  tema === "oscuro" ? "#2dd4bf" : "#e8612a",
+                boxShadow:
+                  tema === "oscuro"
+                    ? "0 0 10px rgba(45, 212, 191, 0.6)"
+                    : "0 0 10px rgba(232, 97, 42, 0.6)",
+              }}
+            >
+              {/* Ícono dentro del thumb */}
+              {tema === "oscuro" ? (
+                <Moon size={11} color="#0a0a0a" />
+              ) : (
+                <Sun size={11} color="#ffffff" />
+              )}
+            </span>
           </button>
         </div>
       </aside>
