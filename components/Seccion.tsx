@@ -13,9 +13,17 @@ export default function Seccion({ id, titulo, children, claseAdicional = "" }: P
     <section id={id} className={`py-20 ${claseAdicional}`}>
       {titulo && (
         <div className="mb-12">
-          <h2 className="text-2xl font-semibold text-white mb-3">{titulo}</h2>
+          <h2
+            className="text-2xl font-semibold mb-3"
+            style={{ color: "var(--color-texto-blanco)" }}
+          >
+            {titulo}
+          </h2>
           {/* Línea de acento debajo del título */}
-          <div className="h-px w-12 bg-[#2dd4bf]" />
+          <div
+            className="h-px w-12"
+            style={{ backgroundColor: "var(--color-acento)" }}
+          />
         </div>
       )}
       {children}

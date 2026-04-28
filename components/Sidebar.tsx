@@ -3,7 +3,8 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Github, Linkedin, Mail, Menu, X } from "lucide-react";
+import { Github, Linkedin, Mail, Menu, X, Sun, Moon } from "lucide-react";
+import { usarTema } from "@/components/ProveedorTema";
 
 // Datos de perfil del sidebar
 const perfilDatos = {
@@ -40,64 +41,83 @@ const enlacesSociales = [
   },
 ];
 
+// Ítems de navegación del sidebar
+const itemsNav = [
+  { etiqueta: "Inicio", href: "#inicio" },
+  { etiqueta: "Sobre mí", href: "#sobre-mi" },
+  { etiqueta: "Proyectos", href: "#proyectos" },
+  { etiqueta: "Servicios", href: "#servicios" },
+  { etiqueta: "Stack", href: "#stack" },
+];
+
 export default function Sidebar() {
   const [menuAbierto, setMenuAbierto] = useState(false);
+  const { tema, alternarTema } = usarTema();
 
   return (
     <>
-   {/*
-        Efecto de palpitación del botón hamburguesa:
-        - Simula una respiración real: expansión suave → contracción → pausa larga
-        - La sombra turquesa crece y se desvanece como si el botón "respirara"
-        - Sin escala para que el layout no se mueva, solo la sombra late
-        - Ciclo de 3.5s: latido rápido + pausa natural, se siente orgánico
-      */}
-      <style>{`
-        @keyframes palpitacion {
-          0%   { box-shadow: 0 0 0 0 rgba(45, 212, 191, 0.0); }
-          15%  { box-shadow: 0 0 0 6px rgba(45, 212, 191, 0.25); }
-          30%  { box-shadow: 0 0 0 0 rgba(45, 212, 191, 0.0); }
-          45%  { box-shadow: 0 0 0 6px rgba(45, 212, 191, 0.15); }
-          60%  { box-shadow: 0 0 0 0 rgba(45, 212, 191, 0.0); }
-          100% { box-shadow: 0 0 0 0 rgba(45, 212, 191, 0.0); }
-        }
- 
-        .boton-palpitacion {
-          animation: palpitacion 3.5s ease-in-out infinite;
-        }
-      `}</style>
-
-      {/* Botón hamburguesa en mobile con efecto de respiración */}
+      {/* ── Botón hamburguesa mobile con animación de respiración ── */}
       <button
-        className="boton-palpitacion fixed top-4 right-4 z-50 md:hidden bg-[#111] border border-[#2dd4bf]/40 p-2 rounded-lg text-[#a1a1aa] hover:text-[#2dd4bf] transition-colors"
+        className={`
+          fixed top-4 right-4 z-50 md:hidden
+          p-2.5 rounded-xl transition-all duration-300
+          ${!menuAbierto ? "boton-respiracion" : ""}
+        `}
+        style={{
+          backgroundColor: menuAbierto
+            ? "var(--color-acento-fondo-hover)"
+            : "var(--color-boton-mobile)",
+          border: "1.5px solid var(--color-acento-borde)",
+          color: "var(--color-acento)",
+        }}
         onClick={() => setMenuAbierto(!menuAbierto)}
         aria-label={menuAbierto ? "Cerrar menú" : "Abrir menú"}
       >
-        {menuAbierto ? <X size={20} /> : <Menu size={20} />}
+        {/* Ícono cambia entre X y Menu con transición suave */}
+        <span
+          className="block transition-transform duration-300"
+          style={{ transform: menuAbierto ? "rotate(90deg)" : "rotate(0deg)" }}
+        >
+          {menuAbierto ? <X size={20} /> : <Menu size={20} />}
+        </span>
       </button>
 
-      {/* Overlay para mobile */}
-      {menuAbierto && (
-        <div
-          className="fixed inset-0 bg-black/70 z-30 md:hidden"
-          onClick={() => setMenuAbierto(false)}
-        />
-      )}
+      {/* ── Overlay con fade para mobile ── */}
+      <div
+        className={`
+          fixed inset-0 z-30 md:hidden
+          transition-opacity duration-300
+          ${menuAbierto ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}
+        `}
+        style={{ backgroundColor: "var(--color-overlay)" }}
+        onClick={() => setMenuAbierto(false)}
+      />
 
-      {/* Sidebar principal — overflow-y-auto para pantallas chicas */}
+      {/* ── Sidebar principal ── */}
       <aside
         className={`
-          fixed top-0 left-0 h-full w-72 bg-[#0d0d0d] border-r border-[#1a1a1a] z-40
+          fixed top-0 left-0 h-full w-72 z-40
           flex flex-col py-10 px-8 gap-8
-          overflow-y-auto
           transition-transform duration-300 ease-in-out
           ${menuAbierto ? "translate-x-0" : "-translate-x-full"}
           md:translate-x-0
         `}
+        style={{
+          backgroundColor: "var(--color-sidebar)",
+          borderRight: "1px solid var(--color-borde)",
+        }}
       >
-        {/* Foto de perfil */}
-        <div className="flex flex-col items-center gap-4 text-center">
-          <div className="relative w-24 h-24 rounded-full overflow-hidden ring-2 ring-[#2dd4bf]/30 shrink-0">
+        {/* ── Foto y datos de perfil ── */}
+        <div
+          className={`flex flex-col items-center gap-4 text-center ${
+            menuAbierto ? "sidebar-item-animado" : ""
+          }`}
+          style={{ animationDelay: "60ms" }}
+        >
+          <div
+            className="relative w-24 h-24 rounded-full overflow-hidden"
+            style={{ boxShadow: "0 0 0 2px var(--color-acento-borde)" }}
+          >
             <Image
               src="/perfil.jpg"
               alt={`Foto de perfil de ${perfilDatos.nombre}`}
@@ -109,34 +129,52 @@ export default function Sidebar() {
 
           {/* Nombre y rol */}
           <div>
-            <h1 className="text-white font-semibold text-lg leading-tight">
+            <h1
+              className="font-semibold text-lg leading-tight"
+              style={{ color: "var(--color-texto-blanco)" }}
+            >
               {perfilDatos.nombre}
             </h1>
-            <p className="text-[#2dd4bf] text-sm font-medium mt-1">{perfilDatos.rol}</p>
+            <p
+              className="text-sm font-medium mt-1"
+              style={{ color: "var(--color-acento)" }}
+            >
+              {perfilDatos.rol}
+            </p>
           </div>
 
           {/* Descripción corta */}
-          <p className="text-[#a1a1aa] text-sm leading-relaxed">{perfilDatos.descripcion}</p>
+          <p className="text-sm leading-relaxed" style={{ color: "var(--color-texto)" }}>
+            {perfilDatos.descripcion}
+          </p>
         </div>
 
         {/* Separador */}
-        <div className="border-t border-[#1a1a1a] shrink-0" />
+        <div style={{ borderTop: "1px solid var(--color-borde)" }} />
 
-        {/* Navegación */}
+        {/* ── Navegación con items animados escalonados en mobile ── */}
         <nav aria-label="Navegación principal">
           <ul className="flex flex-col gap-2">
-            {[
-              { etiqueta: "Inicio", href: "#inicio" },
-              { etiqueta: "Sobre mí", href: "#sobre-mi" },
-              { etiqueta: "Proyectos", href: "#proyectos" },
-              { etiqueta: "Servicios", href: "#servicios" },
-              { etiqueta: "Stack", href: "#stack" },
-            ].map((item) => (
-              <li key={item.href}>
+            {itemsNav.map((item, indice) => (
+              <li
+                key={item.href}
+                className={menuAbierto ? "sidebar-item-animado" : ""}
+                style={{ animationDelay: `${120 + indice * 55}ms` }}
+              >
                 <a
                   href={item.href}
                   onClick={() => setMenuAbierto(false)}
-                  className="block px-3 py-2 rounded-lg text-[#a1a1aa] text-sm hover:text-[#2dd4bf] hover:bg-[#2dd4bf]/5 transition-all duration-200"
+                  className="block px-3 py-2 rounded-lg text-sm transition-all duration-200"
+                  style={{ color: "var(--color-texto)" }}
+                  onMouseEnter={(e) => {
+                    (e.currentTarget as HTMLElement).style.color = "var(--color-acento)";
+                    (e.currentTarget as HTMLElement).style.backgroundColor =
+                      "var(--color-acento-fondo)";
+                  }}
+                  onMouseLeave={(e) => {
+                    (e.currentTarget as HTMLElement).style.color = "var(--color-texto)";
+                    (e.currentTarget as HTMLElement).style.backgroundColor = "transparent";
+                  }}
                 >
                   {item.etiqueta}
                 </a>
@@ -146,10 +184,15 @@ export default function Sidebar() {
         </nav>
 
         {/* Separador */}
-        <div className="border-t border-[#1a1a1a] shrink-0" />
+        <div style={{ borderTop: "1px solid var(--color-borde)" }} />
 
-        {/* Íconos de redes sociales */}
-        <div className="flex items-center justify-center gap-4 pb-2">
+        {/* ── Íconos de redes sociales animados en mobile ── */}
+        <div
+          className={`flex items-center justify-center gap-4 ${
+            menuAbierto ? "sidebar-item-animado" : ""
+          }`}
+          style={{ animationDelay: "420ms" }}
+        >
           {enlacesSociales.map((enlace) => {
             const Icono = enlace.icono;
             return (
@@ -159,12 +202,73 @@ export default function Sidebar() {
                 target={enlace.nombre !== "Email" ? "_blank" : undefined}
                 rel={enlace.nombre !== "Email" ? "noopener noreferrer" : undefined}
                 aria-label={enlace.etiqueta}
-                className="text-[#a1a1aa] hover:text-[#2dd4bf] transition-colors duration-200 hover:drop-shadow-[0_0_8px_#2dd4bf]"
+                className="transition-all duration-200"
+                style={{ color: "var(--color-texto)" }}
+                onMouseEnter={(e) => {
+                  (e.currentTarget as HTMLElement).style.color = "var(--color-acento)";
+                  (e.currentTarget as HTMLElement).style.filter =
+                    "drop-shadow(0 0 8px var(--color-acento))";
+                }}
+                onMouseLeave={(e) => {
+                  (e.currentTarget as HTMLElement).style.color = "var(--color-texto)";
+                  (e.currentTarget as HTMLElement).style.filter = "none";
+                }}
               >
                 <Icono size={20} />
               </Link>
             );
           })}
+        </div>
+
+        {/* Separador */}
+        <div style={{ borderTop: "1px solid var(--color-borde)" }} />
+
+        {/* ── Botón de cambio de tema (sol / luna) ── */}
+        <div
+          className={`flex items-center justify-center ${
+            menuAbierto ? "sidebar-item-animado" : ""
+          }`}
+          style={{ animationDelay: "480ms" }}
+        >
+          <button
+            onClick={alternarTema}
+            aria-label={tema === "oscuro" ? "Cambiar a modo claro" : "Cambiar a modo oscuro"}
+            className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium
+              transition-all duration-300"
+            style={{
+              backgroundColor: "var(--color-acento-fondo)",
+              border: "1px solid var(--color-acento-borde)",
+              color: "var(--color-acento)",
+            }}
+            onMouseEnter={(e) => {
+              (e.currentTarget as HTMLElement).style.backgroundColor =
+                "var(--color-acento-fondo-hover)";
+              (e.currentTarget as HTMLElement).style.borderColor =
+                "var(--color-acento-borde-hover)";
+              (e.currentTarget as HTMLElement).style.boxShadow =
+                "0 0 12px var(--color-acento-sombra)";
+            }}
+            onMouseLeave={(e) => {
+              (e.currentTarget as HTMLElement).style.backgroundColor =
+                "var(--color-acento-fondo)";
+              (e.currentTarget as HTMLElement).style.borderColor =
+                "var(--color-acento-borde)";
+              (e.currentTarget as HTMLElement).style.boxShadow = "none";
+            }}
+          >
+            {/* Sol → cambiar a claro / Luna → cambiar a oscuro */}
+            {tema === "oscuro" ? (
+              <>
+                <Sun size={16} />
+                <span>Modo claro</span>
+              </>
+            ) : (
+              <>
+                <Moon size={16} />
+                <span>Modo oscuro</span>
+              </>
+            )}
+          </button>
         </div>
       </aside>
     </>

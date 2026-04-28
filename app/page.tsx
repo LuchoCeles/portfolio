@@ -1,57 +1,17 @@
 import Sidebar from "@/components/Sidebar";
 import Seccion from "@/components/Seccion";
 import TarjetaProyecto from "@/components/TarjetaProyecto";
+import ListaServicios from "@/components/ListaServicios";
+import ListaStack from "@/components/ListaStack";
+import BotonHero from "@/components/BotonHero";
 import { proyectos } from "@/data/proyectos";
-import {
-  Code2,
-  Server,
-  Database,
-  GitBranch,
-  Zap,
-  ArrowRight,
-  Globe,
-  Settings,
-  Calendar,
-  Plug,
-  Layers,
-} from "lucide-react";
-
-// Datos del stack tecnológico organizado por categoría
-const stackTecnologico = [
-  {
-    categoria: "Frontend",
-    tecnologias: ["React", "Next.js", "Tailwind CSS"],
-    icono: Code2,
-  },
-  {
-    categoria: "Backend",
-    tecnologias: ["Node.js", "Express", "ASP.NET Core"],
-    icono: Server,
-  },
-  {
-    categoria: "Base de Datos",
-    tecnologias: ["MySQL", "SQL Server", "Prisma / Dapper"],
-    icono: Database,
-  },
-  {
-    categoria: "Otros",
-    tecnologias: ["Git", "WebSocket", "OAuth", "Nodemailer"],
-    icono: GitBranch,
-  },
-];
-
-// Servicios ofrecidos con íconos correspondientes
-const servicios = [
-  { titulo: "Desarrollo de aplicaciones SaaS", icono: Layers },
-  { titulo: "Desarrollo web fullstack", icono: Globe },
-  { titulo: "Software a medida", icono: Settings },
-  { titulo: "Integración de APIs", icono: Plug },
-  { titulo: "Sistemas de turnos online", icono: Calendar },
-];
 
 export default function PaginaInicio() {
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-[#a1a1aa]">
+    <div
+      className="min-h-screen"
+      style={{ backgroundColor: "var(--color-fondo)", color: "var(--color-texto)" }}
+    >
       {/* Sidebar fijo */}
       <Sidebar />
 
@@ -61,39 +21,42 @@ export default function PaginaInicio() {
         {/* ── HERO ─────────────────────────────────────────── */}
         <Seccion id="inicio" claseAdicional="min-h-screen flex flex-col justify-center pt-10 md:pt-0">
           <div className="flex flex-col gap-6 animate-fade-in">
-            <span className="text-[#2dd4bf] text-sm font-medium tracking-widest uppercase">
+            <span
+              className="text-sm font-medium tracking-widest uppercase"
+              style={{ color: "var(--color-acento)" }}
+            >
               Disponible para proyectos
             </span>
 
-            <h1 className="text-5xl md:text-7xl font-bold text-white leading-none tracking-tight">
+            <h1
+              className="text-5xl md:text-7xl font-bold leading-none tracking-tight"
+              style={{ color: "var(--color-texto-blanco)" }}
+            >
               Fullstack
               <br />
-              <span className="text-[#2dd4bf]">Developer</span>
+              <span style={{ color: "var(--color-acento)" }}>Developer</span>
             </h1>
 
-            <p className="text-lg text-[#71717a] max-w-lg leading-relaxed">
+            <p
+              className="text-lg max-w-lg leading-relaxed"
+              style={{ color: "var(--color-texto-tenue)" }}
+            >
               Construyo aplicaciones web modernas, escalables y centradas en el usuario.
             </p>
 
-            {/* Botón principal con glow turquesa */}
+            {/* Botón principal — componente cliente para manejar el hover */}
             <div className="mt-4">
-              <a
-                href="#proyectos"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-[#2dd4bf] text-[#0a0a0a]
-                  font-semibold rounded-xl text-sm
-                  hover:shadow-[0_0_25px_rgba(45,212,191,0.4)] hover:bg-[#2dd4bf]/90
-                  transition-all duration-300"
-              >
-                Ver proyectos
-                <ArrowRight size={16} />
-              </a>
+              <BotonHero />
             </div>
           </div>
         </Seccion>
 
         {/* ── SOBRE MÍ ─────────────────────────────────────── */}
         <Seccion id="sobre-mi" titulo="Sobre mí">
-          <div className="flex flex-col gap-5 text-[#71717a] text-base leading-relaxed max-w-2xl">
+          <div
+            className="flex flex-col gap-5 text-base leading-relaxed max-w-2xl"
+            style={{ color: "var(--color-texto-tenue)" }}
+          >
             <p>
               Soy Analista de Sistemas con experiencia en desarrollo fullstack, especializado en
               la creación de aplicaciones web modernas utilizando tecnologías como Next.js,
@@ -127,59 +90,25 @@ export default function PaginaInicio() {
 
         {/* ── SERVICIOS ────────────────────────────────────── */}
         <Seccion id="servicios" titulo="Servicios">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-            {servicios.map(({ titulo, icono: Icono }) => (
-              <div
-                key={titulo}
-                className="group flex items-start gap-4 p-5 bg-[#0f0f0f] border border-[#1a1a1a]
-                  rounded-xl hover:border-[#2dd4bf]/25 hover:bg-[#2dd4bf]/3
-                  transition-all duration-300"
-              >
-                <div className="p-2 rounded-lg bg-[#2dd4bf]/10 text-[#2dd4bf] shrink-0
-                  group-hover:bg-[#2dd4bf]/20 transition-colors duration-300">
-                  <Icono size={18} />
-                </div>
-                <p className="text-sm text-[#a1a1aa] font-medium leading-snug group-hover:text-white
-                  transition-colors duration-300">
-                  {titulo}
-                </p>
-              </div>
-            ))}
-          </div>
+          {/* Los datos e íconos viven dentro del componente cliente */}
+          <ListaServicios />
         </Seccion>
 
         {/* ── STACK TECNOLÓGICO ────────────────────────────── */}
         <Seccion id="stack" titulo="Stack Tecnológico">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            {stackTecnologico.map(({ categoria, tecnologias, icono: Icono }) => (
-              <div
-                key={categoria}
-                className="p-6 bg-[#0f0f0f] border border-[#1a1a1a] rounded-xl
-                  hover:border-[#2dd4bf]/20 transition-all duration-300"
-              >
-                {/* Encabezado de categoría */}
-                <div className="flex items-center gap-3 mb-4">
-                  <Icono size={16} className="text-[#2dd4bf]" />
-                  <h3 className="text-white text-sm font-semibold">{categoria}</h3>
-                </div>
-
-                {/* Lista de tecnologías */}
-                <ul className="flex flex-col gap-2">
-                  {tecnologias.map((tecnologia) => (
-                    <li key={tecnologia} className="flex items-center gap-2 text-sm text-[#71717a]">
-                      <Zap size={11} className="text-[#2dd4bf]/50" />
-                      {tecnologia}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
+          {/* Los datos e íconos viven dentro del componente cliente */}
+          <ListaStack />
         </Seccion>
 
         {/* Footer */}
-        <footer className="py-12 border-t border-[#1a1a1a] mt-8">
-          <p className="text-[#3f3f46] text-sm text-center">
+        <footer
+          className="py-12 mt-8"
+          style={{ borderTop: "1px solid var(--color-borde)" }}
+        >
+          <p
+            className="text-sm text-center"
+            style={{ color: "var(--color-texto-mas-tenue)" }}
+          >
             © {new Date().getFullYear()} Luciano Baltazar Celes — Todos los derechos reservados
           </p>
         </footer>

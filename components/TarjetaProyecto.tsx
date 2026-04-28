@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { ExternalLink, Check } from "lucide-react";
 import { Proyecto } from "@/data/proyectos";
@@ -10,19 +12,39 @@ interface PropsTarjetaProyecto {
 export default function TarjetaProyecto({ proyecto, indice }: PropsTarjetaProyecto) {
   return (
     <article
-      className="group relative bg-[#0f0f0f] border border-[#1a1a1a] rounded-2xl overflow-hidden
-        hover:border-[#2dd4bf]/30 transition-all duration-500 ease-out
-        hover:shadow-[0_0_30px_rgba(45,212,191,0.07)]"
-      style={{ animationDelay: `${indice * 100}ms` }}
+      className="group relative rounded-2xl overflow-hidden transition-all duration-500 ease-out"
+      style={{
+        backgroundColor: "var(--color-fondo-tarjeta)",
+        border: "1px solid var(--color-borde)",
+        animationDelay: `${indice * 100}ms`,
+      }}
+      onMouseEnter={(e) => {
+        const el = e.currentTarget as HTMLElement;
+        el.style.borderColor = "var(--color-acento-borde-hover)";
+        el.style.boxShadow = `0 0 30px var(--color-acento-fondo)`;
+      }}
+      onMouseLeave={(e) => {
+        const el = e.currentTarget as HTMLElement;
+        el.style.borderColor = "var(--color-borde)";
+        el.style.boxShadow = "none";
+      }}
     >
-      {/* Barra de acento superior */}
-      <div className="h-px bg-gradient-to-r from-transparent via-[#2dd4bf]/20 to-transparent
-        group-hover:via-[#2dd4bf]/60 transition-all duration-500" />
+      {/* Barra de acento superior con gradiente */}
+      <div
+        className="h-px transition-all duration-500"
+        style={{
+          background: `linear-gradient(to right, transparent, var(--color-acento-borde), transparent)`,
+        }}
+      />
 
       <div className="p-7">
         {/* Encabezado de la tarjeta */}
         <div className="flex items-start justify-between gap-4 mb-4">
-          <h3 className="text-white font-semibold text-xl leading-tight group-hover:text-[#2dd4bf] transition-colors duration-300">
+          <h3
+            className="font-semibold text-xl leading-tight transition-colors duration-300
+              group-hover:opacity-80"
+            style={{ color: "var(--color-texto-blanco)" }}
+          >
             {proyecto.titulo}
           </h3>
           <Link
@@ -30,35 +52,58 @@ export default function TarjetaProyecto({ proyecto, indice }: PropsTarjetaProyec
             target="_blank"
             rel="noopener noreferrer"
             aria-label={`Ver proyecto ${proyecto.titulo}`}
-            className="shrink-0 text-[#a1a1aa] hover:text-[#2dd4bf] transition-all duration-200
-              hover:drop-shadow-[0_0_8px_#2dd4bf] mt-1"
+            className="shrink-0 mt-1 transition-all duration-200"
+            style={{ color: "var(--color-texto)" }}
+            onMouseEnter={(e) => {
+              (e.currentTarget as HTMLElement).style.color = "var(--color-acento)";
+              (e.currentTarget as HTMLElement).style.filter = `drop-shadow(0 0 8px var(--color-acento))`;
+            }}
+            onMouseLeave={(e) => {
+              (e.currentTarget as HTMLElement).style.color = "var(--color-texto)";
+              (e.currentTarget as HTMLElement).style.filter = "none";
+            }}
           >
             <ExternalLink size={18} />
           </Link>
         </div>
 
-        {/* Descripción */}
-        <p className="text-[#a1a1aa] text-sm leading-relaxed mb-5">
+        {/* Descripción del proyecto */}
+        <p
+          className="text-sm leading-relaxed mb-5"
+          style={{ color: "var(--color-texto)" }}
+        >
           {proyecto.descripcion}
         </p>
 
-        {/* Características */}
+        {/* Lista de características */}
         <ul className="flex flex-col gap-2 mb-6">
           {proyecto.caracteristicas.map((caracteristica) => (
-            <li key={caracteristica} className="flex items-center gap-2 text-sm text-[#71717a]">
-              <Check size={13} className="text-[#2dd4bf] shrink-0" />
+            <li
+              key={caracteristica}
+              className="flex items-center gap-2 text-sm"
+              style={{ color: "var(--color-texto-tenue)" }}
+            >
+              <Check
+                size={13}
+                className="shrink-0"
+                style={{ color: "var(--color-acento)" }}
+              />
               {caracteristica}
             </li>
           ))}
         </ul>
 
-        {/* Tecnologías */}
+        {/* Badges de tecnologías */}
         <div className="flex flex-wrap gap-2">
           {proyecto.tecnologias.map((tecnologia) => (
             <span
               key={tecnologia}
-              className="px-2.5 py-1 bg-[#2dd4bf]/5 border border-[#2dd4bf]/15 rounded-md
-                text-[#2dd4bf] text-xs font-medium"
+              className="px-2.5 py-1 rounded-md text-xs font-medium"
+              style={{
+                backgroundColor: "var(--color-acento-fondo)",
+                border: "1px solid var(--color-acento-borde)",
+                color: "var(--color-acento)",
+              }}
             >
               {tecnologia}
             </span>

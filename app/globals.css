@@ -2,34 +2,65 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ── Variables de color del portfolio ───────────────── */
+/* ── Variables del tema oscuro (por defecto) ─────────── */
 :root {
   --color-fondo: #0a0a0a;
   --color-fondo-secundario: #0f0f0f;
+  --color-fondo-tarjeta: #0f0f0f;
   --color-texto: #a1a1aa;
   --color-texto-tenue: #71717a;
+  --color-texto-mas-tenue: #3f3f46;
+  --color-texto-blanco: #ffffff;
   --color-acento: #2dd4bf;
+  --color-acento-hover: rgba(45, 212, 191, 0.9);
+  --color-acento-sombra: rgba(45, 212, 191, 0.4);
+  --color-acento-fondo: rgba(45, 212, 191, 0.05);
+  --color-acento-fondo-hover: rgba(45, 212, 191, 0.1);
+  --color-acento-borde: rgba(45, 212, 191, 0.15);
+  --color-acento-borde-hover: rgba(45, 212, 191, 0.3);
   --color-borde: #1a1a1a;
+  --color-sidebar: #0d0d0d;
+  --color-overlay: rgba(0, 0, 0, 0.7);
+  --color-boton-mobile: #111111;
+  --color-boton-mobile-borde: #222222;
+}
+
+/* ── Variables del tema claro ────────────────────────── */
+.tema-claro {
+  --color-fondo: #f8f5f0;
+  --color-fondo-secundario: #ffffff;
+  --color-fondo-tarjeta: #ffffff;
+  --color-texto: #6b6360;
+  --color-texto-tenue: #9c8f8b;
+  --color-texto-mas-tenue: #c4b8b4;
+  --color-texto-blanco: #1a0f0d;
+  --color-acento: #e8612a;
+  --color-acento-hover: rgba(232, 97, 42, 0.9);
+  --color-acento-sombra: rgba(232, 97, 42, 0.35);
+  --color-acento-fondo: rgba(232, 97, 42, 0.06);
+  --color-acento-fondo-hover: rgba(232, 97, 42, 0.12);
+  --color-acento-borde: rgba(232, 97, 42, 0.2);
+  --color-acento-borde-hover: rgba(232, 97, 42, 0.4);
+  --color-borde: #e8ddd8;
+  --color-sidebar: #ffffff;
+  --color-overlay: rgba(0, 0, 0, 0.4);
+  --color-boton-mobile: #ffffff;
+  --color-boton-mobile-borde: #e8ddd8;
 }
 
 /* ── Estilos base ────────────────────────────────────── */
 html {
   scroll-behavior: smooth;
-
-  /*
-    Sin navbar fija que ocupe altura, el valor anterior de 80px
-    empujaba el contenido demasiado hacia abajo al navegar por anclas.
-    Con 24px se logra un respiro visual mínimo sin dejar espacio excesivo.
-  */
-  scroll-padding-top: 24px;
+  scroll-padding-top: 80px;
 }
 
 body {
   background-color: var(--color-fondo);
   color: var(--color-texto);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Ocultar scrollbar en WebKit manteniendo funcionalidad */
+/* ── Scrollbar personalizado ─────────────────────────── */
 ::-webkit-scrollbar {
   width: 6px;
 }
@@ -41,7 +72,7 @@ body {
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #2a2a2a;
+  background: var(--color-texto-mas-tenue);
 }
 
 /* ── Animaciones de entrada ──────────────────────────── */
@@ -58,4 +89,37 @@ body {
 
 .animate-fade-in {
   animation: entrada-fade 0.7s ease-out forwards;
+}
+
+/* ── Animación de respiración para el botón mobile ───── */
+@keyframes respiracion {
+  0%, 100% {
+    box-shadow: 0 0 0 0 var(--color-acento-sombra);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 0 8px transparent;
+    transform: scale(1.05);
+  }
+}
+
+.boton-respiracion {
+  animation: respiracion 2.5s ease-in-out infinite;
+}
+
+/* ── Animación de entrada para items del sidebar en mobile ── */
+@keyframes entrada-desde-abajo-rapida {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.sidebar-item-animado {
+  opacity: 0;
+  animation: entrada-desde-abajo-rapida 0.35s ease-out forwards;
 }

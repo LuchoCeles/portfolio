@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
-import "./globals.css";
+import "@/app/globals.css";
+import ProveedorTema from "@/components/ProveedorTema";
 
 // Fuente principal del portfolio
 const fuentePrincipal = DM_Sans({
@@ -29,7 +30,12 @@ export default function LayoutRaiz({
 }) {
   return (
     <html lang="es" className={fuentePrincipal.variable}>
-      <body className={`${fuentePrincipal.className} antialiased`}>{children}</body>
+      <body className={`${fuentePrincipal.className} antialiased`}>
+        {/* Proveedor de tema envuelve toda la aplicación */}
+        <ProveedorTema>
+          {children}
+        </ProveedorTema>
+      </body>
     </html>
   );
 }
