@@ -59,7 +59,7 @@ export default function Sidebar() {
       {/* ── Botón hamburguesa mobile con animación de respiración ── */}
       <button
         className={`
-          fixed top-4 right-4 z-50 md:hidden
+          fixed top-4 right-4 z-50 lg:hidden
           p-2.5 rounded-xl transition-all duration-300
           ${!menuAbierto ? "boton-respiracion" : ""}
         `}
@@ -85,7 +85,7 @@ export default function Sidebar() {
       {/* ── Overlay con fade para mobile ── */}
       <div
         className={`
-          fixed inset-0 z-30 md:hidden
+          fixed inset-0 z-30 lg:hidden
           transition-opacity duration-300
           ${menuAbierto ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}
         `}
@@ -95,16 +95,14 @@ export default function Sidebar() {
 
       {/* ── Sidebar principal ── */}
       <aside
-         className={`
+        className={`
           fixed top-0 left-0 h-full w-72 z-40
           flex flex-col
-          /* 🟢 Espaciado responsive */
-          py-6 md:py-10 px-6 md:px-8 gap-4 md:gap-8
-          transition-transform duration-300 ease-in-out
-          /* 🟢 ¡Evitá el scroll! */
-          overflow-hidden
+          py-[3vh] px-[5vw] gap-[2vh]          /* ← mobile/tablet */
+          lg:py-[5vh] lg:px-[2.5vw] lg:gap-[3vh] /* ← desktop */
+          transition-transform duration-300 ease-in-out overflow-hidden
           ${menuAbierto ? "translate-x-0" : "-translate-x-full"}
-          md:translate-x-0
+          lg:translate-x-0
         `}
         style={{
           backgroundColor: "var(--color-sidebar)",
@@ -113,14 +111,17 @@ export default function Sidebar() {
       >
         {/* ── Foto y datos de perfil ── */}
         <div
-          className={`flex flex-col items-center gap-4 text-center ${
-            menuAbierto ? "sidebar-item-animado" : ""
-          }`}
+          className={`flex flex-col items-center gap-4 text-center ${menuAbierto ? "sidebar-item-animado" : ""
+            }`}
           style={{ animationDelay: "60ms" }}
         >
           <div
-            className="relative w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden"
-            style={{ boxShadow: "0 0 0 2px var(--color-acento-borde)" }}
+            className="relative rounded-full overflow-hidden"
+            style={{
+              width: "min(8vh, 80px)",
+              height: "min(8vh, 80px)",
+              boxShadow: "0 0 0 2px var(--color-acento-borde)",
+            }}
           >
             <Image
               src="/perfil.jpg"
@@ -135,20 +136,31 @@ export default function Sidebar() {
           <div>
             <h1
               className="font-semibold text-lg leading-tight"
-              style={{ color: "var(--color-texto-blanco)" }}
+              style={{
+                color: "var(--color-texto-blanco)",
+                fontSize: "clamp(0.9rem, 2.5vh, 1.125rem)"
+              }}
             >
               {perfilDatos.nombre}
             </h1>
             <p
               className="text-sm font-medium mt-1"
-              style={{ color: "var(--color-acento)" }}
+              style={{
+                color: "var(--color-acento)",
+                fontSize: "clamp(0.75rem, 2vh, 0.875rem)"
+              }}
             >
               {perfilDatos.rol}
             </p>
           </div>
 
           {/* Descripción corta */}
-          <p className="text-sm leading-relaxed" style={{ color: "var(--color-texto)" }}>
+          <p
+            className="text-sm leading-relaxed"
+            style={{
+              color: "var(--color-texto)",
+              fontSize: "clamp(0.7rem, 1.8vh, 0.875rem)"
+            }}>
             {perfilDatos.descripcion}
           </p>
         </div>
@@ -192,9 +204,8 @@ export default function Sidebar() {
 
         {/* ── Íconos de redes sociales animados en mobile ── */}
         <div
-          className={`flex items-center justify-center gap-4 ${
-            menuAbierto ? "sidebar-item-animado" : ""
-          }`}
+          className={`flex items-center justify-center gap-4 ${menuAbierto ? "sidebar-item-animado" : ""
+            }`}
           style={{ animationDelay: "420ms" }}
         >
           {enlacesSociales.map((enlace) => {
@@ -229,9 +240,8 @@ export default function Sidebar() {
 
         {/* ── Toggle switch de cambio de tema ── */}
         <div
-          className={`flex items-center justify-center gap-3 ${
-            menuAbierto ? "sidebar-item-animado" : ""
-          }`}
+          className={`flex items-center justify-center gap-3 ${menuAbierto ? "sidebar-item-animado" : ""
+            }`}
           style={{ animationDelay: "480ms" }}
         >
 
