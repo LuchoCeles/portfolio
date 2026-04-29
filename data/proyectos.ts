@@ -47,4 +47,18 @@ export const proyectos: Proyecto[] = [
     ],
     enlace: "https://lavadero-web.vercel.app/",
   },
+  {
+    titulo: "El Directo",
+    descripcion:
+      "Plataforma profesional de logística y transporte de carga especializada en la ruta Mar del Plata - Rosario, optimizada para conversión y visibilidad en buscadores.",
+    tecnologias: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion", "Lucide React", "Vercel"],
+    caracteristicas: [
+      "Diseño responsive y moderno",
+      "Optimización SEO avanzada (JSON-LD)",
+      "Integración de mapas interactivos",
+      "Formularios de contacto directos",
+      "Animaciones fluidas con Framer Motion",
+    ],
+    enlace: "https://el-directo.vercel.app",
+  }
 ];
