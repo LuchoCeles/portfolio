@@ -52,12 +52,16 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 80px;
+  /* Evita el scroll horizontal causado por el sidebar fuera de pantalla en mobile */
+  overflow-x: hidden;
 }
 
 body {
   background-color: var(--color-fondo);
   color: var(--color-texto);
   transition: background-color 0.3s ease, color 0.3s ease;
+  /* Garantiza que el body tampoco genere scroll horizontal */
+  overflow-x: hidden;
 }
 
 /* ── Scrollbar personalizado ─────────────────────────── */

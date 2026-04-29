@@ -12,14 +12,18 @@ export default function PaginaInicio() {
       className="min-h-screen"
       style={{ backgroundColor: "var(--color-fondo)", color: "var(--color-texto)" }}
     >
-      {/* Sidebar fijo */}
+      {/* Sidebar fijo — en desktop (lg+) ocupa 288px a la izquierda */}
       <Sidebar />
 
-      {/* Contenido principal con margen para el sidebar en desktop */}
-      <main className="md:ml-72 px-6 md:px-16 max-w-4xl">
+      {/*
+        Contenido principal:
+        - Mobile/Tablet (< lg): sin margen lateral, ocupa todo el ancho
+        - Desktop (lg+): margen izquierdo de 72 (288px) para dejar espacio al sidebar
+      */}
+      <main className="lg:ml-72 px-6 md:px-16 max-w-4xl">
 
         {/* ── HERO ─────────────────────────────────────────── */}
-        <Seccion id="inicio" claseAdicional="min-h-screen flex flex-col justify-center pt-10 md:pt-0">
+        <Seccion id="inicio" claseAdicional="min-h-screen flex flex-col justify-center pt-20 lg:pt-0">
           <div className="flex flex-col gap-6 animate-fade-in">
             <span
               className="text-sm font-medium tracking-widest uppercase"

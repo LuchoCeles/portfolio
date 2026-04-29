@@ -56,10 +56,10 @@ export default function Sidebar() {
 
   return (
     <>
-      {/* ── Botón hamburguesa mobile con animación de respiración ── */}
+      {/* ── Botón hamburguesa: visible solo por debajo de lg (1024px) ── */}
       <button
         className={`
-          fixed top-4 right-4 z-50 md:hidden
+          fixed top-4 right-4 z-50 lg:hidden
           p-2.5 rounded-xl transition-all duration-300
           ${!menuAbierto ? "boton-respiracion" : ""}
         `}
@@ -82,10 +82,10 @@ export default function Sidebar() {
         </span>
       </button>
 
-      {/* ── Overlay con fade para mobile ── */}
+      {/* ── Overlay con fade: solo activo en mobile/tablet cuando el menú está abierto ── */}
       <div
         className={`
-          fixed inset-0 z-30 md:hidden
+          fixed inset-0 z-30 lg:hidden
           transition-opacity duration-300
           ${menuAbierto ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}
         `}
@@ -93,14 +93,17 @@ export default function Sidebar() {
         onClick={() => setMenuAbierto(false)}
       />
 
-      {/* ── Sidebar principal ── */}
+      {/* ── Sidebar principal ──
+          Mobile/Tablet (< lg): se desliza desde la izquierda como overlay
+          Desktop (lg+): fijo y siempre visible, sin afectar el flujo del documento
+      ── */}
       <aside
         className={`
           fixed top-0 left-0 h-full w-72 z-40
           flex flex-col py-10 px-8 gap-8
           transition-transform duration-300 ease-in-out
           ${menuAbierto ? "translate-x-0" : "-translate-x-full"}
-          md:translate-x-0
+          lg:translate-x-0
         `}
         style={{
           backgroundColor: "var(--color-sidebar)",
@@ -186,7 +189,7 @@ export default function Sidebar() {
         {/* Separador */}
         <div style={{ borderTop: "1px solid var(--color-borde)" }} />
 
-        {/* ── Íconos de redes sociales animados en mobile ── */}
+        {/* ── Íconos de redes sociales ── */}
         <div
           className={`flex items-center justify-center gap-4 ${
             menuAbierto ? "sidebar-item-animado" : ""
@@ -223,59 +226,51 @@ export default function Sidebar() {
         {/* Separador */}
         <div style={{ borderTop: "1px solid var(--color-borde)" }} />
 
-        {/* ── Toggle switch de cambio de tema ── */}
+        {/* ── Botón de cambio de tema (sol / luna) ── */}
         <div
-          className={`flex items-center justify-center gap-3 ${
+          className={`flex items-center justify-center ${
             menuAbierto ? "sidebar-item-animado" : ""
           }`}
           style={{ animationDelay: "480ms" }}
         >
-
-          {/* Pista del toggle */}
           <button
             onClick={alternarTema}
             aria-label={tema === "oscuro" ? "Cambiar a modo claro" : "Cambiar a modo oscuro"}
-            className="relative flex-shrink-0 rounded-full transition-all duration-300 cursor-pointer"
+            className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium
+              transition-all duration-300"
             style={{
-              width: "52px",
-              height: "28px",
-              backgroundColor:
-                tema === "oscuro"
-                  ? "rgba(45, 212, 191, 0.12)"
-                  : "rgba(232, 97, 42, 0.12)",
-              border:
-                tema === "oscuro"
-                  ? "1.5px solid rgba(45, 212, 191, 0.35)"
-                  : "1.5px solid rgba(232, 97, 42, 0.35)",
-              boxShadow:
-                tema === "oscuro"
-                  ? "inset 0 0 8px rgba(45, 212, 191, 0.08)"
-                  : "inset 0 0 8px rgba(232, 97, 42, 0.08)",
+              backgroundColor: "var(--color-acento-fondo)",
+              border: "1px solid var(--color-acento-borde)",
+              color: "var(--color-acento)",
+            }}
+            onMouseEnter={(e) => {
+              (e.currentTarget as HTMLElement).style.backgroundColor =
+                "var(--color-acento-fondo-hover)";
+              (e.currentTarget as HTMLElement).style.borderColor =
+                "var(--color-acento-borde-hover)";
+              (e.currentTarget as HTMLElement).style.boxShadow =
+                "0 0 12px var(--color-acento-sombra)";
+            }}
+            onMouseLeave={(e) => {
+              (e.currentTarget as HTMLElement).style.backgroundColor =
+                "var(--color-acento-fondo)";
+              (e.currentTarget as HTMLElement).style.borderColor =
+                "var(--color-acento-borde)";
+              (e.currentTarget as HTMLElement).style.boxShadow = "none";
             }}
           >
-            {/* Thumb deslizante con el ícono */}
-            <span
-              className="absolute top-1/2 flex items-center justify-center rounded-full transition-all duration-300"
-              style={{
-                width: "20px",
-                height: "20px",
-                transform: "translateY(-50%)",
-                left: tema === "oscuro" ? "3px" : "calc(100% - 23px)",
-                backgroundColor:
-                  tema === "oscuro" ? "#2dd4bf" : "#e8612a",
-                boxShadow:
-                  tema === "oscuro"
-                    ? "0 0 10px rgba(45, 212, 191, 0.6)"
-                    : "0 0 10px rgba(232, 97, 42, 0.6)",
-              }}
-            >
-              {/* Ícono dentro del thumb */}
-              {tema === "oscuro" ? (
-                <Moon size={11} color="#0a0a0a" />
-              ) : (
-                <Sun size={11} color="#ffffff" />
-              )}
-            </span>
+            {/* Sol → cambiar a claro / Luna → cambiar a oscuro */}
+            {tema === "oscuro" ? (
+              <>
+                <Sun size={16} />
+                <span>Modo claro</span>
+              </>
+            ) : (
+              <>
+                <Moon size={16} />
+                <span>Modo oscuro</span>
+              </>
+            )}
           </button>
         </div>
       </aside>
