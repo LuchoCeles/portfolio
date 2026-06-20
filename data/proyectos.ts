@@ -23,14 +23,15 @@ export const proyectos: Proyecto[] = [
     enlace: "https://urbanbarber-web.vercel.app/",
   },
   {
-    titulo: "Gestión OK",
+    titulo: "Gestión OK - Surf Shop",
     descripcion:
-      "Sistema interno de gestión para control de stock, proveedores y pagos orientado a negocios.",
-    tecnologias: ["Next.js", "Prisma"],
+      "E-commerce y plataforma de gestión integral para una tienda de surf, que combina un catálogo interactivo de productos con un panel interno para el control de stock, proveedores y facturación.",
+    tecnologias: ["Next.js", "TypeScript", "Tailwind CSS", "Prisma", "Mercado Pago"],
     caracteristicas: [
-      "Gestión de stock",
-      "Administración de proveedores",
-      "Control de pagos",
+      "Catálogo de productos con filtros avanzados (tablas, trajes, accesorios)",
+      "Carrito de compras",
+      "Panel de administración para control de stock y proveedores",
+      "Gestión de pedidos",
     ],
     enlace: "https://gestionok.vercel.app/",
   },
