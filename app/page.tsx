@@ -4,9 +4,9 @@ import TarjetaProyecto from "@/components/TarjetaProyecto";
 import ListaServicios from "@/components/ListaServicios";
 import ListaStack from "@/components/ListaStack";
 import BotonHero from "@/components/BotonHero";
+import Contacto from "@/components/Contacto";
 import { proyectos } from "@/data/proyectos";
 import { Analytics } from "@vercel/analytics/react";
-
 export default function PaginaInicio() {
   return (
     <>
@@ -84,6 +84,7 @@ export default function PaginaInicio() {
                 con foco en SaaS y soluciones a medida.
               </p>
             </div>
+            <Contacto />
           </Seccion>
 
           {/* ── PROYECTOS ────────────────────────────────────── */}
