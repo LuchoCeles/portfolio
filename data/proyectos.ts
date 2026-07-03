@@ -10,7 +10,7 @@ export interface Proyecto {
 
 export const proyectos: Proyecto[] = [
   {
-    titulo: "Urban Barber",
+    titulo: "Mayoraz Barber",
     descripcion:
       "Plataforma de turnos online para barberías que permite a los usuarios seleccionar servicio, profesional y horario, con integración de pagos online.",
     tecnologias: ["Next.js", "Prisma", "Node.js", "Nodemailer", "OAuth", "Mercado Pago"],
@@ -20,7 +20,7 @@ export const proyectos: Proyecto[] = [
       "Pagos online",
       "Notificaciones por email",
     ],
-    enlace: "https://urbanbarber-web.vercel.app/",
+    enlace: "https://mayoraz.vercel.app/",
   },
   {
     titulo: "Gestión OK - Surf Shop",
@@ -33,7 +33,7 @@ export const proyectos: Proyecto[] = [
       "Panel de administración para control de stock y proveedores",
       "Gestión de pedidos",
     ],
-    enlace: "https://gestionok.vercel.app/",
+    enlace: "https://newsurfboards.vercel.app/",
   },
   {
     titulo: "Lavadero Web",
