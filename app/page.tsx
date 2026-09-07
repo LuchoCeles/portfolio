@@ -23,10 +23,10 @@ export default function PaginaInicio() {
         - Mobile/Tablet (< lg): sin margen lateral, ocupa todo el ancho
         - Desktop (lg+): margen izquierdo de 72 (288px) para dejar espacio al sidebar
         */}
-        <main className="lg:ml-72 px-6 md:px-16 max-w-4xl">
+        <main className="md:ml-72 w-auto px-6 md:px-10 lg:px-12 xl:px-16">
 
           {/* ── HERO ─────────────────────────────────────────── */}
-          <Seccion id="inicio" claseAdicional="min-h-screen flex flex-col justify-center pt-20 lg:pt-0">
+          <Seccion id="inicio" claseAdicional="min-h-screen flex flex-col justify-center pt-20 md:pt-0">
             <div className="flex flex-col gap-6 animate-fade-in">
               <span
                 className="text-sm font-medium tracking-widest uppercase"
@@ -89,7 +89,7 @@ export default function PaginaInicio() {
 
           {/* ── PROYECTOS ────────────────────────────────────── */}
           <Seccion id="proyectos" titulo="Proyectos">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
               {proyectos.map((proyecto, indice) => (
                 <TarjetaProyecto key={proyecto.titulo} proyecto={proyecto} indice={indice} />
               ))}
