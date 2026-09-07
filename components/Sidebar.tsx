@@ -39,8 +39,12 @@ export default function Sidebar() {
       {/* Sidebar con colores dinámicos mediante variables CSS */}
       <aside
         className={`
-          fixed top-0 left-0 h-full w-72 z-40
-          flex flex-col py-10 px-8 gap-8
+          fixed inset-y-0 left-0 w-72 z-40
+          flex flex-col
+          px-8 py-6 md:py-8
+          gap-5 md:gap-6
+          overflow-y-auto overflow-x-hidden
+          scrollbar-hide
           transition-transform duration-300 ease-in-out
           ${menuAbierto ? "translate-x-0" : "-translate-x-full"}
           md:translate-x-0
