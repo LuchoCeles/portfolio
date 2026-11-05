@@ -104,5 +104,19 @@ export const proyectos: Proyecto[] = [
       "Animaciones fluidas con Framer Motion",
     ],
     enlace: "https://transporteeldirecto.com.ar/",
+  },
+  {
+    titulo: "Etérea New Concept",
+    descripcion:
+      "Tienda online de indumentaria femenina desarrollada para Etérea, con catálogo autoadministrable, variantes por talle y color, y pedidos coordinados por WhatsApp.",
+    tecnologias: ["Next.js", "TypeScript", "Tailwind CSS", "Prisma", "TiDB/MySQL", "Cloudinary"],
+    caracteristicas: [
+      "Catálogo de indumentaria con búsqueda y filtros por categoría",
+      "Fichas de producto con galería, talles y colores",
+      "Carrito y pedidos coordinados por WhatsApp",
+      "Cotización de envíos con Correo Argentino",
+      "Panel de administración para productos, categorías, promociones y contenido",
+    ],
+    enlace: "https://etereanewconcept.com.ar/",
   }
 ];
